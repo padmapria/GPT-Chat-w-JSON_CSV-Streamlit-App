@@ -1,6 +1,6 @@
 import streamlit as st
 import os
-import pandas as pd
+import json
 import openai
 from dotenv import load_dotenv
 
@@ -16,10 +16,11 @@ if openai_api_key is None:
 else:
     openai.api_key = openai_api_key
 
-def chat_with_csv(df, prompt):
+
+def chat_with_json(json_data, prompt):
     try:
-        # Convert the dataframe to CSV format without the index
-        data = df.to_csv(index=False)
+        # Convert the JSON data to string format
+        data = json.dumps(json_data)
         # Call the OpenAI ChatCompletion API with the data and user's prompt
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -30,7 +31,9 @@ def chat_with_csv(df, prompt):
         )
         # Extract the result from the API response
         result = response['choices'][0]['message']['content'].strip()
-        print(result)
+        # Analyze the result to see if it appears to lack relevant information
+        if "I don't know" in result or "I'm not sure" in result:
+            return "Sorry, I do not have that information available."
         return result
     except Exception as e:
         # Show any errors that occur during the API call
@@ -41,21 +44,21 @@ def chat_with_csv(df, prompt):
 st.set_page_config(layout='wide')
 
 # Set the title of the page
-st.title("ChatCSV powered by GPT-3.5-turbo")
+st.title("ChatJSON powered by GPT-3.5-turbo")
 
-# File uploader widget to accept CSV files
-input_csv = st.file_uploader("Upload your CSV file", type=['csv'])
+# File uploader widget to accept JSON files
+input_json = st.file_uploader("Upload your JSON file", type=['json'])
 
-if input_csv is not None:
+if input_json is not None:
     # Create two columns for layout
     col1, col2 = st.columns([1, 1])
 
     with col1:
-        st.info("CSV Uploaded Successfully")
-        # Read the uploaded CSV file into a DataFrame
-        data = pd.read_csv(input_csv)
-        # Display the DataFrame in a container
-        st.dataframe(data, use_container_width=True)
+        st.info("JSON Uploaded Successfully")
+        # Load the JSON data into a Python object
+        json_data = json.load(input_json)
+        # Display the JSON data in a container
+        st.json(json_data)
 
     with col2:
         st.info("Chat Below")
@@ -64,10 +67,10 @@ if input_csv is not None:
 
         if input_text:
             # Button to initiate the chat
-            if st.button("Chat with CSV"):
+            if st.button("Chat with JSON"):
                 st.info("Your Query: " + input_text)
-                # Call the function to chat with the CSV data
-                result = chat_with_csv(data, input_text)
+                # Call the function to chat with the JSON data
+                result = chat_with_json(json_data, input_text)
                 if result is not None:
                     # Display the chat result
                     st.success(result)
