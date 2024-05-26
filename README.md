@@ -24,7 +24,9 @@ openai_api_key = os.getenv("OPENAI_API_KEY")
 git clone https://github.com/ddum-sutd/Chat-w-CSV-Streamlit-App.git    
 cd Chat-w-CSV-Streamlit-App    
 pip install -r requirements.txt    
-streamlit run app.py    
+streamlit run app_json.py    
+or
+streamlit run app_csv.py  
 
 4. Run on Streamlit Cloud   
 To deploy the app on Streamlit Cloud:     
