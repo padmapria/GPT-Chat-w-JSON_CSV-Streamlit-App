@@ -21,7 +21,7 @@ openai_api_key = os.getenv("OPENAI_API_KEY")
 
 3. Ensure Streamlit is installed on your system and run the app using the below commands from command prompt:
 
-git clone https://github.com/ddum-sutd/Chat-w-CSV-Streamlit-App.git    
+git clone https://github.com/padmapria/Chat-w-CSV-Streamlit-App.git    
 cd Chat-w-CSV-Streamlit-App    
 pip install -r requirements.txt    
 streamlit run app_json.py    
