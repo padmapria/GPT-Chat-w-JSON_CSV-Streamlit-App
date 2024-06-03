@@ -21,7 +21,7 @@ def chat_with_csv(df, prompt):
         # Convert the dataframe to CSV format without the index
         data = df.to_csv(index=False)
         # Call the OpenAI ChatCompletion API with the data and user's prompt
-        response = openai.ChatCompletion.create(
+        response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a data analyst."},
@@ -29,7 +29,7 @@ def chat_with_csv(df, prompt):
             ],
         )
         # Extract the result from the API response
-        result = response['choices'][0]['message']['content'].strip()
+        result = response.choices[0].message.content
         print(result)
         # Analyze the result to see if it appears to lack relevant information
         if "I don't know" in result or "I'm not sure" in result:
