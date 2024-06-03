@@ -22,7 +22,7 @@ def chat_with_json(json_data, prompt):
         # Convert the JSON data to string format
         data = json.dumps(json_data)
         # Call the OpenAI ChatCompletion API with the data and user's prompt
-        response = openai.ChatCompletion.create(
+        response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a data analyst."},
@@ -30,7 +30,7 @@ def chat_with_json(json_data, prompt):
             ],
         )
         # Extract the result from the API response
-        result = response['choices'][0]['message']['content'].strip()
+        result = response.choices[0].message.content
         # Analyze the result to see if it appears to lack relevant information
         if "I don't know" in result or "I'm not sure" in result:
             return "Sorry, I do not have that information available."
