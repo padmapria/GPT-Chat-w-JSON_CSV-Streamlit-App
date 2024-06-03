@@ -19,15 +19,23 @@ load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 ```
 
-3. Ensure Streamlit is installed on your system and run the app using the below commands from command prompt:
-
+3. Ensure all the project libraries are installed on your system and run the app using the below commands from command prompt:    
 git clone https://github.com/padmapria/GPT-Chat-w-JSON_CSV-Streamlit-App.git    
 cd GPT-Chat-w-JSON_CSV-Streamlit-App    
 pip install -r requirements.txt    
-streamlit run app_json.py     
+streamlit run app_json.py   
+
+Check the deployed application from the brower..       
+http://localhost:8501     
+
+![Example Image](chat_with_json.jpg)
+
 or     
 streamlit run app_csv.py  
 
+Check the deployed application from the brower..       
+http://localhost:8501   
+![Example Image](chat_with_csv.jpg)
 4. Run on Streamlit Cloud   
 To deploy the app on Streamlit Cloud:     
 
